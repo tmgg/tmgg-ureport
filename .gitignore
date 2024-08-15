@@ -1,0 +1,5 @@
+/.idea/
+target/
+package-lock.json
+node_modules/
+/ureport2-console/src/main/resources/report/

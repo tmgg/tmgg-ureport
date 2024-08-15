@@ -1,0 +1,56 @@
+# https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Publish  Maven
+
+on:
+  workflow_dispatch:
+
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: get project version
+        id: pv
+        run: |
+          pv=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
+          echo "::set-output name=result::$pv"
+
+
+      - name: get git tag version
+        id: tv
+        uses: revam/gh-action-get-tag-and-version@v1
+        with:
+          tag: ${{ github.ref }}
+
+      - name: Check Tag version
+        if: ${{ steps.pv.outputs.result != steps.tv.outputs.version_short}}
+        uses: actions/github-script@v4
+        with:
+          script: core.setFailed('Invalid Tag:${{github.ref_name}} project version:${{steps.pv.outputs.result}} tag version:${{steps.tv.outputs.version_short}} ')
+
+
+
+      - name: Publish MAVEN
+        run: mvn -q deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_KEY }}
+
+
