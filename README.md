@@ -3,7 +3,7 @@
 
 ureport用起来挺顺手，为了简化修复bug及新增功能，将其修改为spring版本
 
-![Maven Version](https://img.shields.io/maven-central/v/io.github.tmgg/ureport) 
+![Maven Version](https://img.shields.io/maven-central/v/io.github.tmgg/ureport-console) 
 
 ```
 <dependency>
