@@ -9,7 +9,7 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
-	<name>UReport2报表</name>
+	<name>UReport报表</name>
 	<description>spring集成</description>
 	<url>https://github.com/tmgg/ureport</url>
 	<licenses>
@@ -47,10 +47,10 @@
 		<version>2.7.15</version>
 	</parent>
 	<modules>
-		<module>ureport2-font</module>
-		<module>ureport2-core</module>
-		<module>ureport2-console</module>
-		<module>ureport2-test</module>
+		<module>ureport-font</module>
+		<module>ureport-core</module>
+		<module>ureport-console</module>
+		<module>ureport-test</module>
 	</modules>
 
 
@@ -66,17 +66,17 @@
 		<dependencies>
 			<dependency>
 				<groupId>io.github.tmgg</groupId>
-				<artifactId>ureport2-font</artifactId>
+				<artifactId>ureport-font</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>io.github.tmgg</groupId>
-				<artifactId>ureport2-core</artifactId>
+				<artifactId>ureport-core</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>io.github.tmgg</groupId>
-				<artifactId>ureport2-console</artifactId>
+				<artifactId>ureport-console</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 		</dependencies>
