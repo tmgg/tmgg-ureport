@@ -27,15 +27,16 @@ import com.bstek.ureport.export.ExportConfigureImpl;
 import com.bstek.ureport.export.ExportManager;
 import com.bstek.ureport.export.excel.high.ExcelProducer;
 import com.bstek.ureport.model.Report;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class ExportExcelAction extends BaseAction {
     }
 
     @RequestMapping("paging")
-    public void paging(@RequestParam("_u")String file,@RequestParam(name = "_n",required = false) String fileName,HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void paging(@RequestParam("_u")String file, @RequestParam(name = "_n",required = false) String fileName, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         buildExcel(file,fileName,req, resp, true, false);
     }
 

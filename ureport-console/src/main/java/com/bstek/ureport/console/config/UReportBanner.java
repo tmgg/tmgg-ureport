@@ -2,12 +2,12 @@ package com.bstek.ureport.console.config;
 
 import com.bstek.ureport.UReportCoreConfig;
 import com.bstek.ureport.UReportProperties;
+import jakarta.annotation.Resource;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 @Component
 public class UReportBanner implements ApplicationRunner {

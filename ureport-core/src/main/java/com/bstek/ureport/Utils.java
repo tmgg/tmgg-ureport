@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -38,7 +38,6 @@ import com.bstek.ureport.model.Report;
 import com.bstek.ureport.provider.image.ImageProvider;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 
 /**
@@ -52,28 +51,28 @@ public class Utils implements ApplicationContextAware{
 
 
 
-	
+
 	public static boolean isDebug() {
 		return true;
 	}
-	
+
 	public static void logToConsole(String msg){
 		if(isDebug()){
 			System.out.println(msg);
 		}
 	}
-	
+
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
-	
 
-	
+
+
 	public static Collection<ImageProvider> getImageProviders() {
 		return imageProviders;
 	}
 
-	
+
 	public static Connection getBuildinConnection(String name){
 		Collection<BuildinDatasource> buildinDatasources = applicationContext.getBeansOfType(BuildinDatasource.class).values();
 		for(BuildinDatasource datasource:buildinDatasources){
@@ -83,7 +82,7 @@ public class Utils implements ApplicationContextAware{
 		}
 		return null;
 	}
-	
+
 	public static List<Cell> fetchTargetCells(Cell cell,Context context,String cellName){
 		while(!context.isCellPocessed(cellName)){
 			context.getReportBuilder().buildCell(context, null);
@@ -143,7 +142,7 @@ public class Utils implements ApplicationContextAware{
 		}
 		return fetchCellsByLeftParent(context,leftParentCell,cellName);
 	}
-	
+
 	private static List<Cell> fetchCellsByTopParent(Context context,Cell cell,String cellName){
 		Cell topParentCell=cell.getTopParentCell();
 		if(topParentCell==null){
@@ -161,7 +160,7 @@ public class Utils implements ApplicationContextAware{
 		}
 		return fetchCellsByTopParent(context,topParentCell,cellName);
 	}
-	
+
 	public static Object getProperty(Object obj,String property){
 		if(obj==null)return null;
 		try{
@@ -174,7 +173,7 @@ public class Utils implements ApplicationContextAware{
 			throw new ReportComputeException(ex);
 		}
 	}
-	
+
 	public static Date toDate(Object obj){
 		if(obj instanceof Date){
 			return (Date)obj;
@@ -185,7 +184,7 @@ public class Utils implements ApplicationContextAware{
 			}catch(Exception ex){
 				sd=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				try{
-					return sd.parse(obj.toString());					
+					return sd.parse(obj.toString());
 				}catch(Exception e){
 					throw new ReportComputeException("Can not convert "+obj+" to Date.");
 				}
@@ -205,7 +204,7 @@ public class Utils implements ApplicationContextAware{
 			}
 			try{
 				String str=obj.toString().trim();
-				return new BigDecimal(str);				
+				return new BigDecimal(str);
 			}catch(Exception ex){
 				throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
 			}
@@ -215,7 +214,7 @@ public class Utils implements ApplicationContextAware{
 		}
 		throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
 	}
-	
+
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {

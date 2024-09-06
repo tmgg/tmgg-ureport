@@ -15,35 +15,24 @@
  ******************************************************************************/
 package com.bstek.ureport.provider.report.file;
 
+import com.bstek.ureport.UReportProperties;
+import com.bstek.ureport.exception.ReportException;
+import com.bstek.ureport.provider.report.ReportFile;
+import com.bstek.ureport.provider.report.ReportProvider;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Component;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-
-import com.bstek.ureport.UReportProperties;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.bstek.ureport.exception.ReportException;
-import com.bstek.ureport.provider.report.ReportFile;
-import com.bstek.ureport.provider.report.ReportProvider;
 
 /**
  * @author Jacky.gao

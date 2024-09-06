@@ -18,12 +18,12 @@ package com.bstek.ureport.console.importexcel;
 import com.bstek.ureport.console.BaseAction;
 import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.definition.ReportDefinition;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -18,10 +18,10 @@ package com.bstek.ureport.console.cache;
 import com.bstek.ureport.console.config.UReportConsoleProperties;
 import com.bstek.ureport.cache.ReportCache;
 import com.bstek.ureport.console.RequestHolder;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,12 +56,12 @@ public class HttpSessionReportCache implements ReportCache {
 		ObjectMap map = getObjectMap(req);
 		map.put(file, object);
 	}
-	
+
 	@Override
 	public boolean disabled() {
 		return uReportConsoleProperties.isDisableHttpSessionReportCache();
 	}
-	
+
 
 	private ObjectMap getObjectMap(HttpServletRequest req) {
 		List<String> expiredList=new ArrayList<String>();

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -16,8 +16,8 @@
 package com.bstek.ureport.console.cache;
 
 import com.bstek.ureport.console.RequestHolder;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +37,11 @@ public class TempObjectCache{
 	public static void putObject(String key,Object obj){
 		tempObjectCache.store(key, obj);
 	}
-	
+
 	public static void removeObject(String key){
 		tempObjectCache.remove(key);
 	}
-	
+
 	public void remove(String key){
 		HttpServletRequest req=RequestHolder.getRequest();
 		if(req==null){
@@ -52,7 +52,7 @@ public class TempObjectCache{
 			mapObject.remove(key);
 		}
 	}
-	
+
 	public Object get(String key) {
 		HttpServletRequest req=RequestHolder.getRequest();
 		if(req==null){

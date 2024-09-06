@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -28,9 +28,9 @@ import com.bstek.ureport.export.html.HtmlReport;
 import com.bstek.ureport.export.pdf.PdfProducer;
 import com.bstek.ureport.export.word.high.WordProducer;
 import com.bstek.ureport.model.Report;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 /**
  * @author Jacky.gao
@@ -54,7 +54,7 @@ public class ExportManagerImpl implements ExportManager {
 		Report report=reportRender.render(reportDefinition, parameters);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 		if(chartMap.size()>0){
-			CacheUtils.storeChartDataMap(chartMap);				
+			CacheUtils.storeChartDataMap(chartMap);
 		}
 		HtmlReport htmlReport=new HtmlReport();
 		String content=htmlProducer.produce(report);
@@ -69,14 +69,14 @@ public class ExportManagerImpl implements ExportManager {
 		htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		return htmlReport;
 	}
-	
+
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 		if(chartMap.size()>0){
-			CacheUtils.storeChartDataMap(chartMap);				
+			CacheUtils.storeChartDataMap(chartMap);
 		}
 		SinglePageData pageData=PageBuilder.buildSinglePageData(pageIndex, report);
 		List<Page> pages=pageData.getPages();
@@ -84,7 +84,7 @@ public class ExportManagerImpl implements ExportManager {
 		if(pages.size()==1){
 			content=htmlProducer.produce(report.getContext(),pages.get(0),false);
 		}else{
-			content=htmlProducer.produce(report.getContext(),pages,pageData.getColumnMargin(),false);			
+			content=htmlProducer.produce(report.getContext(),pages,pageData.getColumnMargin(),false);
 		}
 		HtmlReport htmlReport=new HtmlReport();
 		htmlReport.setContent(content);
@@ -124,9 +124,9 @@ public class ExportManagerImpl implements ExportManager {
 		Report report=reportRender.render(reportDefinition, parameters);
 		excelProducer.produce(report, config.getOutputStream());
 	}
-	
 
-	
+
+
 	@Override
 	public void exportExcelWithPaging(ExportConfigure config) {
 		String file=config.getFile();
@@ -136,7 +136,7 @@ public class ExportManagerImpl implements ExportManager {
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
 
-	
+
 	@Override
 	public void exportExcelWithPagingSheet(ExportConfigure config) {
 		String file=config.getFile();
