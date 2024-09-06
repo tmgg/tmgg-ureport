@@ -104,7 +104,7 @@ public class ReportRender implements ApplicationContextAware {
 
         for (ReportProvider provider : reportProviders) {
             if (file.startsWith(provider.getPrefix())) {
-                return provider.getReport(file);
+                return provider.loadReport(file);
             }
         }
         throw new ReportException("Report [" + file + "] not support.");

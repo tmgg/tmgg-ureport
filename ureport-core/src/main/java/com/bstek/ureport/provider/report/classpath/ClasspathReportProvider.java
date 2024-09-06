@@ -29,8 +29,6 @@ import org.springframework.util.Assert;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,12 +43,12 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ClasspathReportProvider implements ReportProvider {
-
-
+    @Resource
+    UReportProperties props;
 
 
     @Override
-    public String getReport(String file) {
+    public String loadReport(String file) {
         boolean devMode = isDevMode();
         if(devMode && !ReportFile.isTemplateFile(file)){
             File realFile = getRealFile(file);
@@ -58,6 +56,8 @@ public class ClasspathReportProvider implements ReportProvider {
         }
         return ResourceUtil.readUtf8Str(file);
     }
+
+
 
 
     @Override
@@ -95,7 +95,7 @@ public class ClasspathReportProvider implements ReportProvider {
         ArrayList<ReportFile> list = new ArrayList<>();
 
         if (!devMode) {
-            String storePath = reportProperties.getStorePath();
+            String storePath = getStorePath();
             File file = new File(storePath);
             String dir = file.getName();
 
@@ -141,17 +141,21 @@ public class ClasspathReportProvider implements ReportProvider {
 
     @Override
     public boolean disabled() {
-        return false;
+        return !props.isClasspathStoreEnable();
     }
 
     @Override
     public String getName() {
-        return reportProperties.getStorePath();
+        return getStorePath();
+    }
+
+    private String getStorePath() {
+        return props.getClasspathStoreDir();
     }
 
 
     private File getStoreRoot() {
-        String path = reportProperties.getStorePath();
+        String path = getStorePath();
         File file = new File(path);
 
         if (file.exists()) {
@@ -160,11 +164,9 @@ public class ClasspathReportProvider implements ReportProvider {
         return file;
     }
 
-    @Resource
-    UReportProperties reportProperties;
 
     private boolean isDevMode() {
-        String path = reportProperties.getStorePath();
+        String path = getStorePath();
         File file = new File(path);
         File parentFile = file.getParentFile();
         boolean isDevMode = parentFile.exists(); // 开发模式下最起码工程目录存在
@@ -173,7 +175,7 @@ public class ClasspathReportProvider implements ReportProvider {
     }
 
     private String getDirName() {
-        String path = reportProperties.getStorePath();
+        String path = getStorePath();
         File file = new File(path);
         return file.getName();
     }

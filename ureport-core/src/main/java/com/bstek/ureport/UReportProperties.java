@@ -10,12 +10,26 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class UReportProperties {
 
+
     /**
-     * 报表存储路径
+     * 文件存储 启用
      */
-    String storePath = "src/main/resources/report";
+    boolean fileStoreEnable = true;
+    /**
+     * 文件存储目录
+     */
+    String fileStoreDir = "/ureport-files";
 
 
+    /**
+     * class 启用
+     */
+    boolean classpathStoreEnable = true;
+
+    /**
+     *
+     */
+    String classpathStoreDir = "ureport-files";
 
 
 
