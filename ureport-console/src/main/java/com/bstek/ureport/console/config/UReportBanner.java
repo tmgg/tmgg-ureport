@@ -32,9 +32,6 @@ public class UReportBanner implements ApplicationRunner {
         System.err.println(consoleProperties);
 
         String key = "spring.jackson.date-format";
-        System.err.println(key + ":" + env.getProperty(key));
-
-
-        System.err.println("修改时间" + UReportCoreConfig.UPDATE_TIME);
+        System.err.println(key + "=" + env.getProperty(key));
     }
 }
