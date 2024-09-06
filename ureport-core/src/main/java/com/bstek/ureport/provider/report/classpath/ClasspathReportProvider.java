@@ -44,20 +44,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ClasspathReportProvider implements ReportProvider {
     @Resource
-    UReportProperties props;
+    private UReportProperties props;
+
+    private boolean isDevMode = new File("pom.xml").exists();
 
 
     @Override
     public String loadReport(String file) {
-        boolean devMode = isDevMode();
-        if(devMode && !ReportFile.isTemplateFile(file)){
+        if (isDevMode && !ReportFile.isTemplateFile(file)) {
             File realFile = getRealFile(file);
             return FileUtil.readUtf8String(realFile);
         }
         return ResourceUtil.readUtf8Str(file);
     }
-
-
 
 
     @Override
@@ -67,7 +66,7 @@ public class ClasspathReportProvider implements ReportProvider {
 
     @Override
     public void deleteReport(String file) {
-        Assert.state(isDevMode(), "只能在开发时操作");
+        Assert.state(isDevMode, "只能在开发时操作");
         File realFile = getRealFile(file);
         Assert.state(realFile.exists(), "文件不存在");
         realFile.delete();
@@ -75,7 +74,7 @@ public class ClasspathReportProvider implements ReportProvider {
 
     @Override
     public void saveReport(String file, String content) {
-        Assert.state(isDevMode(), "只能在开发时操作");
+        Assert.state(isDevMode, "只能在开发时操作");
         File storeFile = getRealFile(file);
         FileUtil.writeString(content, storeFile, StandardCharsets.UTF_8);
     }
@@ -90,12 +89,11 @@ public class ClasspathReportProvider implements ReportProvider {
 
     @Override
     public List<ReportFile> getReportFiles() {
-        boolean devMode = isDevMode();
         String dirName = getDirName();
         ArrayList<ReportFile> list = new ArrayList<>();
 
-        if (!devMode) {
-            String storePath = getStorePath();
+        if (!isDevMode) {
+            String storePath = getStoreDir();
             File file = new File(storePath);
             String dir = file.getName();
 
@@ -104,9 +102,6 @@ public class ClasspathReportProvider implements ReportProvider {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             try {
                 org.springframework.core.io.Resource[] resources = resolver.getResources(classPath);
-                if (resources == null) {
-                    return Collections.emptyList();
-                }
 
                 for (org.springframework.core.io.Resource resource : resources) {
                     String filename = resource.getFilename();
@@ -117,7 +112,7 @@ public class ClasspathReportProvider implements ReportProvider {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }else {
+        } else {
             // 开发模式下
             File storeRoot = getStoreRoot();
 
@@ -146,16 +141,16 @@ public class ClasspathReportProvider implements ReportProvider {
 
     @Override
     public String getName() {
-        return getStorePath();
+        return "classpath:" + getStoreDir();
     }
 
-    private String getStorePath() {
+    private String getStoreDir() {
         return props.getClasspathStoreDir();
     }
 
 
     private File getStoreRoot() {
-        String path = getStorePath();
+        String path = getStoreDir();
         File file = new File(path);
 
         if (file.exists()) {
@@ -165,17 +160,8 @@ public class ClasspathReportProvider implements ReportProvider {
     }
 
 
-    private boolean isDevMode() {
-        String path = getStorePath();
-        File file = new File(path);
-        File parentFile = file.getParentFile();
-        boolean isDevMode = parentFile.exists(); // 开发模式下最起码工程目录存在
-
-        return isDevMode;
-    }
-
     private String getDirName() {
-        String path = getStorePath();
+        String path = getStoreDir();
         File file = new File(path);
         return file.getName();
     }

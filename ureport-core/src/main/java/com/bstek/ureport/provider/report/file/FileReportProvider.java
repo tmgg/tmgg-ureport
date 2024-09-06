@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
@@ -55,18 +56,22 @@ public class FileReportProvider implements ReportProvider {
     @Resource
     private UReportProperties props;
 
+    private String storeDir;
 
-    public String getStoreDir() {
-        return props.getFileStoreDir();
+    @PostConstruct
+    public void init() throws IOException {
+        storeDir = props.getFileStoreDir();
+            FileUtils.forceMkdir(new File(storeDir));
     }
+
 
 
     @Override
     public String loadReport(String file) {
         if (file.startsWith(prefix)) {
-            file = file.substring(prefix.length(), file.length());
+            file = file.substring(prefix.length());
         }
-        String fullPath = getStoreDir() + "/" + file;
+        String fullPath = storeDir + "/" + file;
         try {
             return FileUtils.readFileToString(new File(fullPath), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -77,9 +82,9 @@ public class FileReportProvider implements ReportProvider {
     @Override
     public void deleteReport(String file) {
         if (file.startsWith(prefix)) {
-            file = file.substring(prefix.length(), file.length());
+            file = file.substring(prefix.length());
         }
-        String fullPath = getStoreDir() + "/" + file;
+        String fullPath = storeDir + "/" + file;
         File f = new File(fullPath);
         if (f.exists()) {
             f.delete();
@@ -88,8 +93,8 @@ public class FileReportProvider implements ReportProvider {
 
     @Override
     public List<ReportFile> getReportFiles() {
-        File file = new File(getStoreDir());
-        List<ReportFile> list = new ArrayList<ReportFile>();
+        File file = new File(storeDir);
+        List<ReportFile> list = new ArrayList<>();
         for (File f : file.listFiles()) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(f.lastModified());
@@ -101,7 +106,7 @@ public class FileReportProvider implements ReportProvider {
 
     @Override
     public String getName() {
-        return "服务器文件系统";
+        return "服务器文件系统" + storeDir;
     }
 
     @Override
@@ -109,7 +114,7 @@ public class FileReportProvider implements ReportProvider {
         if (file.startsWith(prefix)) {
             file = file.substring(prefix.length(), file.length());
         }
-        String fullPath = getStoreDir() + "/" + file;
+        String fullPath = storeDir + "/" + file;
         FileOutputStream outStream = null;
         try {
             outStream = new FileOutputStream(new File(fullPath));

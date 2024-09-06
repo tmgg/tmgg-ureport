@@ -53,8 +53,6 @@ import java.util.*;
 @RequestMapping("ureport/designer")
 public class DesignerAction extends BaseAction {
 
-
-
     @Resource
     private ReportRender reportRender;
 
@@ -189,6 +187,10 @@ public class DesignerAction extends BaseAction {
         CacheUtils.cacheReportDefinition(file, reportDef);
     }
 
+    /**
+     * reportFiles,name,prefix
+     * @return
+     */
     @RequestMapping("loadReportProviders")
     public List<ReportProvider> loadReportProviders() {
         return reportProviders;
