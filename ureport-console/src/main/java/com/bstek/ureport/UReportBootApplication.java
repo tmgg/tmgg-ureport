@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UReportBootApplication {
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         SpringApplication.run(UReportBootApplication.class, args);
     }
 }

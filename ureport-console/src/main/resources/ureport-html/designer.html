@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline'">
+
 <link href="${contextPath}/ureport/res/ureport-asserts/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/ureport/res/ureport-asserts/css/handsontable.min.css" rel="stylesheet" type="text/css" />
 <title>UReport2 Designer</title>
@@ -10,7 +12,7 @@
  <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/completer.min.js"></script>
  <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap-colorpicker.min.js"></script>
  <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/common.bundle.js"></script>
- <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-ureport'">
+
 </head>
 <body style="margin:0px">
 <div id='container'></div>
